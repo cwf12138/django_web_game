@@ -1,4 +1,4 @@
-class WfGame {
+export class WfGame {
     constructor(id) {
         this.id = id;
         this.$wf_game = $('#' + id);
