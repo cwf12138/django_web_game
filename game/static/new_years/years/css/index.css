@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'lcfj';
+    src: url(../font/lcfj.ttf);
+}
+
+@font-face {
+    font-family: 'djs';
+    src: url(../font/datk6.ttf);
+}
+
+body {
+    /* background: #EF3D04; */
+    overflow: hidden;
+    background: #F35708 url(../images/hebj.png)no-repeat center center/100% 100%;
+}
+
+.he {
+    position: absolute;
+    width: 160px;
+    height: 120px;
+    background: url(../images/hebj.png)no-repeat center center/100% 100%;
+    border-radius: 5px 5px 0 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    transition: all 3s;
+}
+
+.he button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #C33830;
+    box-shadow: 0 0 5px #D7A057, 0 0 2px #D7A057 inset;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    background: transparent url(../images/huzhua.png)no-repeat center center/100% 100%;
+    font-size: 12px;
+    color: yellow;
+    font-weight: 700;
+}
+
+.box {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: all;
+    top: calc(100% - 50px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.box span {
+    position: absolute;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.fire {
+    /* width: 200px;
+    height: 200px; */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: suofang 4.5s linear;
+}
+
+.title {
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    background: url(../images/hunian.png)no-repeat center center/100% 100%;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 1s;
+    display: none;
+}
+
+.greetings {
+    position: absolute;
+    top: 180px;
+    width: 260px;
+    height: 400px;
+    background: #FFE5C8;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.yu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    writing-mode: tb;
+    width: 100%;
+    height: 85%;
+    border-radius: 10px;
+    background: url(../images/zhufu.png)no-repeat center center/100% 100%;
+}
+
+#blessing {
+    font-size: 50px;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.74);
+    letter-spacing: 6px;
+    font-family: 'djs';
+}
+
+#btn {
+    width: 100%;
+    height: 15%;
+    margin-top: 50px;
+    border-radius: 10px;
+    border: 1px solid #D7A057;
+    color: #D7A057;
+    font-size: 14px;
+    font-weight: 700;
+    background: url(../images/btn.png)no-repeat center center/100% 100%;
+}
+
+@keyframes suofang {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(20);
+        opacity: .5;
+    }
+    100% {
+        transform: scale(100);
+        opacity: 0;
+        display: none;
+    }
+}
