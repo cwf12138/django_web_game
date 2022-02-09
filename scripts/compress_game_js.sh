@@ -5,4 +5,4 @@ JS_PATH_SRC=${JS_PATH}src/
 
 find ${JS_PATH_SRC} -type f -name '*.js' | sort -r | xargs cat > ${JS_PATH_DIST}game.js
 
-
+echo yes | python3 manage.py collectstatic

@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">">
+    <title>hello world</title>>
+    <style type="text/css">
+			*{ margin:0; padding:0;}
+			body{
+				overflow:hidden;
+			}
+			.btn-audio{
+			
+                            width: 230x;
+                           height: 186px;
+			
+			background-size:cover;
+   
+			}
+			#perspective{
+				perspective:800px;
+			}
+			#wrap{
+				width:120px;  
+				height:180px;
+				margin:600px auto;
+				position:relative;
+
+			
+				transform-style:preserve-3d;
+				transform:rotateX(-10deg) rotateY(0deg);
+				
+			}
+			#wrap img{
+				width:100%;
+				height:100%;
+				position:absolute;
+				
+				 border-radius: 5px;
+            box-shadow: 0px 0px 10px #fff;
+            -webkit-box-reflect: below 10px -webkit-linear-gradient(top,rgba(0,0,0,0) 50%,rgba(0,0,0,0.5) 100%);
+			}
+			#wrap p{
+				width:1200px;
+				height:1200px;
+				background:-webkit-radial-gradient(center center,600px 600px,rgba(244,23,234,0.2),rgba(0,0,0,0));
+				border-radius:100%;
+				position:absolute;
+				left:50%;
+				top:102%;
+				margin-left:-600px;
+				margin-top:-600px;
+				transform:rotateX(90deg);
+			}
+		</style>
+</head>
+
+<body>
+<div id="web_bg" style="position:absolute; width:100%; height:100%; z-index:-1"> 
+<img style="position:fixed;" src="./gris15.jpg" height="100%" width="100%" /> 
+</div>
+
+<div style = "margin-left:300px"> 
+<marquee behavior = "alternate" width=500 ><span style = "font-weight:bolder;margin-left=250px;font-family:STKaiti;font-size:40px;color:black;align= center;">2022 一起加油</span></marquee>
+</div>
+<div id = "area"
+     style = "font-family:STKaiti;font-size:25px;color:black;margin-left:200px;margin-right:200px;"
+     align = "left"
+	 >
+</div>
+
+
+<div id="perspective">
+<div id='wrap'>
+<img src="./pictures/a1.jpg" />
+<img src="./pictures/a2.jpg" />
+<img src="./pictures/a3.jpg" />
+<img src="./pictures/a4.jpg" />
+<img src="./pictures/a5.jpg" />
+<img src="./pictures/a1.jpg" />
+<img src="./pictures/a2.jpg" />
+<img src="./pictures/a3.jpg" />
+<img src="./pictures/a4.jpg" />
+<img src="./pictures/a5.jpg" />
+<p></p>
+</div>
+</div>
+<div class = "btn-audio"  style="position:fixed; bottom:0; right:0;">
+<audio id="bgmusic" autoplay preload loop controls ></audio>
+</div>
+
+
+  <script type="text/javascript" ">
+		        var t,r,q,j=0;                                                         
+                var c = 0;
+			    var oWrap = document.getElementById('wrap');
+                var str="新年快乐 冷胜洁";
+                var len=str.length;
+                var n=1;		 
+			  
+			(function() {
+        function log(info) {
+            console.log(info);
+           
+        }
+        function forceSafariPlayAudio() {
+            audioEl.load(); 
+            audioEl.play(); 
+        }
+
+        var audioEl = document.getElementById('bgmusic');audioEl.addEventListener('loadstart', function() {
+            log('loadstart');
+        }, false);
+        audioEl.addEventListener('loadeddata', function() {
+            log('loadeddata');
+        }, false);
+        audioEl.addEventListener('loadedmetadata', function() {
+            log('loadedmetadata');
+        }, false);
+        audioEl.addEventListener('canplay', function() {
+            log('canplay');
+        }, false);
+        audioEl.addEventListener('play', function() {
+            log('play');
+            window.removeEventListener('touchstart', forceSafariPlayAudio, false);
+        }, false);
+        audioEl.addEventListener('playing', function() {
+            log('playing');
+        }, false);
+        audioEl.addEventListener('pause', function() {
+            log('pause');
+        }, false);
+
+        window.addEventListener('touchstart', forceSafariPlayAudio, false);
+
+        audioEl.src = './forest.mp3';
+    })();
+	
+
+	        
+
+			 function timeT(){
+			 j=j+1;
+			 oWrap.style.transform = 'rotateY('+ j*0.36 +'deg)';
+			 r = setTimeout("timeT()",40)
+			 } 
+			
+			 function showword(){
+			 document.getElementById('area').innerHTML=str.substr(0,n);
+			 n++;
+              if(n<=len){
+                 q=setTimeout("showword()",500)
+			 }
+			 }
+			
+			
+			window.onload = function(){
+				var oWrap = document.getElementById('wrap');
+				var oImg = oWrap.getElementsByTagName('img');
+				var oImgLength = oImg.length;
+				var Deg = 360 / oImgLength;
+				var nowX , nowY , lastX , lastY , minusX = 0, minusY = 0;
+				var roY = 0 , roX = -10;
+				var timer;
+                
+				for ( var i=0;i<oImgLength;i++ )
+				{
+					oImg[i].style.transform = 'rotateY('+ i*Deg +'deg) translateZ(350px)';
+					oImg[i].style.transition = 'transform 1s '+ (oImgLength-1-i)*0.1 +'s';
+
+				}
+
+				mTop();
+                   
+             		   
+				window.onresize = mTop;
+
+				function mTop(){
+					var wH = document.documentElement.clientHeight;
+					oWrap.style.marginTop = wH / 2 - 180 + 'px';
+				}
+					 				
+				document.onmousedown = function(ev){
+						
+					lastX = ev.clientX;
+					lastY = ev.clientY;
+					
+					this.onmousemove = function(ev){
+						ev = ev || window.event;
+
+						clearInterval( timer );
+
+						nowX = ev.clientX; 
+						nowY = ev.clientY; 
+						
+						minusX = nowX - lastX; 
+						minusY = nowY - lastY;
+						
+						
+						roY += minusX*0.2; // roY = roY + minusX*0.2;
+						roX -= minusY*0.1;
+	 
+						oWrap.style.transform = 'rotateX('+ roX +'deg) rotateY('+ roY +'deg)';
+						
+						lastX = nowX;
+						lastY = nowY;
+
+					}
+					this.onmouseup = function(){
+						this.onmousemove = null;
+						timer = setInterval(function(){
+							minusX *= 0.95;
+							minusY *= 0.95;
+							roY += minusX*0.2; // roY = roY + minusX*0.2;
+							roX -= minusY*0.1;
+							oWrap.style.transform = 'rotateX('+ roX +'deg) rotateY('+ roY +'deg)';
+
+							if ( Math.abs(minusX)<0.1 && Math.abs( minusY )<0.1 )
+							{
+								clearInterval( timer );
+							}
+							console.log( minusX );
+						},13);
+					}
+					return false;
+				}
+			  timeT();
+			
+			 showword();
+            }
+            
+		</script>
+		
+		
+		
+</body>
+</html>
