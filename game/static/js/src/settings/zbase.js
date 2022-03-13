@@ -100,7 +100,7 @@ class Settings {
 
         this.$register.hide();
 
-        this.root.$ac_game.append(this.$settings);
+        this.root.$wf_game.append(this.$settings);
 
         this.start();
     }
