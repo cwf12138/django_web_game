@@ -99,7 +99,7 @@ class Settings {
         this.$register_login = this.$register.find(".wf-game-settings-option");
 
         this.$register.hide();
-
+        this.$acwing_login = this.$settings.find('.wf-game-settings-acwing img');
         this.root.$wf_game.append(this.$settings);
 
         this.start();
@@ -111,8 +111,13 @@ class Settings {
     }
 
     add_listening_events() {
+    	 let outer = this;
         this.add_listening_events_login();
         this.add_listening_events_register();
+		this.$acwing_login.click(function() {
+            outer.acwing_login();
+        });
+
     }
 
     add_listening_events_login() {
@@ -135,6 +140,19 @@ class Settings {
             outer.register_on_remote();
         });
     }
+	acwing_login() {
+        $.ajax({
+            url: "https://app691.acapp.acwing.com.cn/settings/acwing/web/apply_code/",
+            type: "GET",
+            success: function(resp) {
+                console.log(resp);
+                if (resp.result === "success") {
+                    window.location.replace(resp.apply_code_url);
+                }
+            }
+        });
+    }
+
 
     login_on_remote() {  // 在远程服务器上登录
         let outer = this;
