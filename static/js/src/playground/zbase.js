@@ -4,7 +4,7 @@ class WfGamePlayground {      // 游戏界面
         this.$playground = $(`<div class="wf-game-playground"></div>`);
 
         this.hide();
-        this.root.$wf_game.append(this.$playground); 
+        this.root.$wf_game.append(this.$playground);        
 
         this.start();
     }
@@ -31,17 +31,17 @@ class WfGamePlayground {      // 游戏界面
 
         if (this.game_map) this.game_map.resize();
     }
-
+	
     show() {  // 打开playground界面
         this.$playground.show();
-        this.width = this.$playground.width();
 		this.resize();
+        this.width = this.$playground.width();
         this.height = this.$playground.height();
         this.game_map = new GameMap(this);
         this.players = [];
 		this.players.push(new Player(this, this.width / 2 / this.scale, 0.5, 0.05, "white", 0.15, true));
         for (let i = 0; i < 5; i ++ ) {
-			this.players.push(new Player(this, this.width / 2 / this.scale, 0.5, 0.05, this.get_random_color(), 0.15, false));
+			 this.players.push(new Player(this, this.width / 2 / this.scale, 0.5, 0.05, this.get_random_color(), 0.15, false));
         }
 
     }

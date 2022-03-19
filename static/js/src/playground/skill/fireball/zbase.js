@@ -59,9 +59,9 @@ class FireBall extends WfGameObject {   //火球技能
         this.destroy();
     }
     render() {
-		let scale = this.playground.scale;
+        let scale = this.playground.scale;
         this.ctx.beginPath();
-		this.ctx.arc(this.x * scale, this.y * scale, this.radius * scale, 0, Math.PI * 2, false);
+        this.ctx.arc(this.x * scale, this.y * scale, this.radius * scale, 0, Math.PI * 2, false);
         this.ctx.fillStyle = this.color;
         this.ctx.fill();
     }
