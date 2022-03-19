@@ -125,11 +125,14 @@ class Player extends WfGameObject {    //任务角色 玩家
             this.shoot_fireball(tx, ty);
         }
 
-        if (this.damage_speed > 10) {
         if (this.damage_speed > this.eps) {
             this.vx = this.vy = 0;
             this.move_length = 0;
             this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
+            this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
+            this.damage_speed *= this.friction;
+        } else {
+            if (this.move_length < this.eps) {
                 this.move_length = 0;
                 this.vx = this.vy = 0;
                 if (!this.is_me) {
@@ -138,10 +141,14 @@ class Player extends WfGameObject {    //任务角色 玩家
                     this.move_to(tx, ty);
                 }
             } else {
+                let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
+                this.x += this.vx * moved;
+                this.y += this.vy * moved;
                 this.move_length -= moved;
             }
         }
     }
+	
 
     render() {
 		 let scale = this.playground.scale;
