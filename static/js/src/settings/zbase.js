@@ -261,7 +261,7 @@ class Settings {
             }
         });
     }
-
+	
     getinfo_web() {
         let outer = this;
 
