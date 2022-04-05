@@ -211,7 +211,7 @@ class Settings {
             this.root.AcWingOS.api.window.close();
         } else {
             $.ajax({
-                url: "https://app165.acapp.acwing.com.cn/settings/logout/",
+                url: "https://app691.acapp.acwing.com.cn/settings/logout/",
                 type: "GET",
                 success: function(resp) {
                     if (resp.result === "success") {
