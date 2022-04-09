@@ -212,6 +212,7 @@ class Player extends WfGameObject {    //任务角色 玩家
 
 	update() {
 		this.spent_time += this.timedelta / 1000;
+        this.update_win();
         if (this.character === "me" && this.playground.state === "fighting") {
             this.update_coldtime();
         }
@@ -219,69 +220,76 @@ class Player extends WfGameObject {    //任务角色 玩家
 		this.render();
 
 	}
-	update_coldtime() {
+    update_win() {
+        if (this.playground.state === "fighting" && this.character === "me" && this.playground.players.length === 1) {
+            this.playground.state = "over";
+            this.playground.score_board.win();
+        }
+    }
+
+    update_coldtime() {
         this.fireball_coldtime -= this.timedelta / 1000;
         this.fireball_coldtime = Math.max(this.fireball_coldtime, 0);
 
         this.blink_coldtime -= this.timedelta / 1000;
         this.blink_coldtime = Math.max(this.blink_coldtime, 0);
     }
-	update_move() {  // 更新玩家移动
-		if (this.character === "robot" && this.spent_time > 4 && Math.random() < 1 / 300.0) {
-			let player = this.playground.players[Math.floor(Math.random() * this.playground.players.length)];
-			let tx = player.x + player.speed * this.vx * this.timedelta / 1000 * 0.3;
-			let ty = player.y + player.speed * this.vy * this.timedelta / 1000 * 0.3;
-			this.shoot_fireball(tx, ty);
-		}
+    update_move() {  // 更新玩家移动
+        if (this.character === "robot" && this.spent_time > 4 && Math.random() < 1 / 300.0) {
+            let player = this.playground.players[Math.floor(Math.random() * this.playground.players.length)];
+            let tx = player.x + player.speed * this.vx * this.timedelta / 1000 * 0.3;
+            let ty = player.y + player.speed * this.vy * this.timedelta / 1000 * 0.3;
+            this.shoot_fireball(tx, ty);
+        }
 
-		if (this.damage_speed > this.eps) {
-			this.vx = this.vy = 0;
-			this.move_length = 0;
-			this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
-			this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
-			this.damage_speed *= this.friction;
-		} else {
-			if (this.move_length < this.eps) {
-				this.move_length = 0;
-				this.vx = this.vy = 0;
-				if (this.character === "robot") {
-					let tx = Math.random() * this.playground.width / this.playground.scale;
-					let ty = Math.random() * this.playground.height / this.playground.scale;
-					this.move_to(tx, ty);
-				}
-			} else {
-				let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
-				this.x += this.vx * moved;
-				this.y += this.vy * moved;
-				this.move_length -= moved;
-			}
-		}
-	}
+        if (this.damage_speed > this.eps) {
+            this.vx = this.vy = 0;
+            this.move_length = 0;
+            this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
+            this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
+            this.damage_speed *= this.friction;
+        } else {
+            if (this.move_length < this.eps) {
+                this.move_length = 0;
+                this.vx = this.vy = 0;
+                if (this.character === "robot") {
+                    let tx = Math.random() * this.playground.width / this.playground.scale;
+                    let ty = Math.random() * this.playground.height / this.playground.scale;
+                    this.move_to(tx, ty);
+                }
+            } else {
+                let moved = Math.min(this.move_length, this.speed * this.timedelta / 1000);
+                this.x += this.vx * moved;
+                this.y += this.vy * moved;
+                this.move_length -= moved;
+            }
+        }
+    }
 
 
-	render() {
-		let scale = this.playground.scale;
-		if (this.character !== "robot") {
-			this.ctx.save();
-			this.ctx.beginPath();
-			this.ctx.arc(this.x * scale, this.y * scale, this.radius * scale, 0, Math.PI * 2, false);
-			this.ctx.stroke();
-			this.ctx.clip();
-			this.ctx.drawImage(this.img, (this.x - this.radius) * scale, (this.y - this.radius) * scale, this.radius * 2 * scale, this.radius * 2 * scale); 
-			this.ctx.restore();
-		} else {
-			this.ctx.beginPath();
-			this.ctx.arc(this.x * scale, this.y * scale, this.radius * scale, 0, Math.PI * 2, false);
-			this.ctx.fillStyle = this.color;
-			this.ctx.fill();
-		}
-		if (this.character === "me" && this.playground.state === "fighting") {
+    render() {
+        let scale = this.playground.scale;
+        if (this.character !== "robot") {
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.arc(this.x * scale, this.y * scale, this.radius * scale, 0, Math.PI * 2, false);
+            this.ctx.stroke();
+            this.ctx.clip();
+            this.ctx.drawImage(this.img, (this.x - this.radius) * scale, (this.y - this.radius) * scale, this.radius * 2 * scale, this.radius * 2 * scale); 
+            this.ctx.restore();
+        } else {
+            this.ctx.beginPath();
+            this.ctx.arc(this.x * scale, this.y * scale, this.radius * scale, 0, Math.PI * 2, false);
+            this.ctx.fillStyle = this.color;
+            this.ctx.fill();
+        }
+        if (this.character === "me" && this.playground.state === "fighting") {
             this.render_skill_coldtime();
         }
 
 
-	}
-	 render_skill_coldtime() {
+    }
+    render_skill_coldtime() {
         let scale = this.playground.scale;
         let x = 1.5, y = 0.9, r = 0.04;
 
@@ -322,15 +330,20 @@ class Player extends WfGameObject {    //任务角色 玩家
     }
 
 
-	on_destroy() {
-		if (this.character === "me")
-            this.playground.state = "over";
-		for (let i = 0; i < this.playground.players.length; i ++ ) {
-			if (this.playground.players[i] === this) {
-				this.playground.players.splice(i, 1);
-				break;
-			}
-		}
-	}
+    on_destroy() {
+        if (this.character === "me") {
+            if (this.playground.state === "fighting") {
+                this.playground.state = "over";
+                this.playground.score_board.lose();
+            }
+        }
+
+        for (let i = 0; i < this.playground.players.length; i ++ ) {
+            if (this.playground.players[i] === this) {
+                this.playground.players.splice(i, 1);
+                break;
+            }
+        }
+    }
 }
 
